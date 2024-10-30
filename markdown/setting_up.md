@@ -1,4 +1,4 @@
-# Welcome to w4h setting up toturial!
+# Welcome to w4h setting up tutorial!
 
 ## Prerequisites
 Before getting started, ensure you have access to your database service, and have the following details ready:
