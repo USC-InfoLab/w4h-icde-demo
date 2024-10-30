@@ -14,6 +14,33 @@ This toolkit comprises the following tools, each tailored to address specific ne
 
 - **[Approximate Aggregate Queries on GeoMTS](https://github.com/USC-InfoLab/fft_approximate)**: A PostgreSQL extension `fft_approximate` for quickly answering aggregate range queries on time series data using an approximate approach.
 
+# Running the Demo
+
+Follow these steps to launch the demo:
+
+## Prerequisites
+docker should already be installed in you server. run following command to check:  
+```shell
+docker --version
+```
+
+## Setup
+
+To run the demo, execute:
+   ```shell
+   docker run -dp 8501:8501 uscimsc/w4h:demo 
+   ```
+If you want to try our latest version, run:
+   ```shell
+   docker run -dp 8501:8501 uscimsc/w4h:latest 
+   ```
+Then access http://{your_server_ip}:8501/ to see the dashboard.
+
+Follow the instructions on the dashboard to continue.
+
+# Setting up the project
+
+To run your own version of this project, follow these steps:
 
 ## Prerequisites
 Ensure you have `python` and `pip` installed on your machine.
@@ -24,6 +51,7 @@ First, navigate to the project directory and install the necessary packages usin
     ```bash
     pip install -r requirements.txt
     ```
+    Recommended python version: 3.9
 
 2. **Configure Database Properties:**
 Copy the provided example configuration file to create your own configuration:
@@ -45,23 +73,3 @@ After the stream simulation service is up and running, initiate the dashboard us
     ```
     Once the dashboard is started, you can access it via the URL provided by `streamlit` in your terminal.
 
-# Setup your server with Docker  
-
-## Prerequisites
-docker has been installed in you server. run:  
-```shell
-docker
-```
-
-to check
-## Setup
-
-To run this demo, run:
-   ```shell
-   docker run -dp 8501:8501 uscimsc/w4h:demo 
-   ```
-If you want to try our latest version, run:
-   ```shell
-   docker run -dp 8501:8501 uscimsc/w4h:latest 
-   ```
-Then access http://{your_server_ip}:8501/ to see the dashboard.
