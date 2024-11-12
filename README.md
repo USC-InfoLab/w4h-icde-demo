@@ -32,6 +32,8 @@ This toolkit comprises the following tools, each tailored to address specific ne
     - Edit the copied file (`conf/config.yaml`) to specify your database properties:
         - `dbms`: Set to 'postgresql'
         - `host`: Your database host
+            - macOS and Windows machines should use `host.docker.internal`
+            - Linux machines should use `localhost`
         - `port`: Your database port
         - `user`: Your database username
         - `password`: Your database password
