@@ -4,6 +4,8 @@ services:
     build: .
     ports:
       - 8501:8501
+    volumes:
+      - ./conf:/app/conf
     depends_on:
       - db
   db:
