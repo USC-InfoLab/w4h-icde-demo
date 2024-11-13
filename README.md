@@ -39,14 +39,18 @@ This toolkit comprises the following tools, each tailored to address specific ne
         - `password`: Your database password
     
     Make sure your PostgreSQL database is populated with the necessary data
-    - **Note:** If you plan to use the Docker container, you can simply add the data within the ImportHub in the Toolkit
+    - **Note:** If you plan to use Docker to run the demo, you can simply add the data within the ImportHub in the Toolkit
 
 ### Running the Demo Using Docker
-1. Download and run the `uscimsc/w4h:demo` Docker image:
+1. **Build Docker Image:** First, navigate to the root directory and build the Docker image:
+    ```shell
+    docker build -t uscimsc/w4h:demo .
+    ```
+2. **Run the Container:** To start a container from the image, use the following command:
     ```shell
     docker run -dp 8501:8501 -v {your_conf_directory_absolute_path}:/app/conf uscimsc/w4h:demo
     ```
-2. Access the demo dashboard at [http://localhost:8501](http://localhost:8501)
+3. **Access the Dashboard**: After the container is up and running, you can access the dashboard at [http://localhost:8501](http://localhost:8501)
 
 ### Running the Demo Without Docker
 1. **Install Required Packages:**
