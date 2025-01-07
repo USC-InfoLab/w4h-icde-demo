@@ -90,17 +90,29 @@ For this you will need a Postgres database loaded with sample data.
 
 ### 3. From code base
 
-1. Set up the PostgreSQL instance with the sample datasets
+The following instructions are provided for **Mac ONLY**!
 
-- For example using [Postgres.app](https://postgresapp.com/downloads.html) on Mac
+1. **Install PostgreSQL**
+
+- Install [Postgres.app](https://postgresapp.com/downloads.html) and start postgres server
 - Verify the installation running `pg_config --version`
+- Verify the connection with pgAdmin using the following credentials:
+
+```plaintext
+    host: localhost
+    port: 5432
+    maintenance database: postgres
+    user: postgres
+    password: postgres
+```
 
 2. **Install Required Packages:**
 
-From the project directory install the necessary packages using `pip`:
+From the project directory activate the `venv` and install the necessary packages using `pip`:
 
 ```bash
-    pip3 install -r requirements.txt
+    source venv/bin/activate
+    pip install -r requirements.txt
 ```
 
 3. **Stream Simulation:**
@@ -118,3 +130,9 @@ After the stream simulation service is up and running, initiate the dashboard us
 ```
 
 Once the dashboard is started, you can access it via the URL provided by `streamlit` in your terminal.
+
+5. **Load sample data:**
+
+    - Download [synthetic_subject_data.csv](https://drive.google.com/file/d/1yAx63xeIwhI_8_1pUqGX2JWbkuFb8e3l/view?usp=sharing)
+
+
