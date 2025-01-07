@@ -4,7 +4,6 @@ import traceback
 import numpy as np
 import pandas as pd
 import streamlit as st
-import streamlit_ext as ste
 from datetime import datetime as dt
 from datetime import timedelta
 from datetime import time as dt_time
@@ -603,7 +602,7 @@ def input_page(garmin_df):
         
         # Go to the results page
         session['page'] = "results"
-        st.experimental_rerun()
+        st.rerun()()
 
 
 # Define the results page
@@ -677,7 +676,7 @@ def results_page():
     if st.button("Back to Inputs"):
         # Go back to the input page
         session["page"] = "input"
-        st.experimental_rerun()
+        st.rerun()()
         
     # creating a single-element container
     placeholder = st.empty()
@@ -1056,7 +1055,7 @@ def results_page():
                 with col1:
                     st.subheader("Full Heart Rate Data")
                     st.dataframe(df_hrate_full)
-                    ste.download_button(
+                    st.download_button(
                         "Press to Download CSV",
                         df_hrate_full.to_csv().encode('utf-8'),
                         "df_hrate_full.csv",
@@ -1065,7 +1064,7 @@ def results_page():
                 with col2:
                     st.subheader("Selected Subject(s) Heart Rate Data")
                     st.dataframe(df_hrate)
-                    ste.download_button(
+                    st.download_button(
                         "Press to Download CSV",
                         df_hrate.to_csv().encode('utf-8'),
                         "df_hrate_subjects.csv",
@@ -1075,7 +1074,7 @@ def results_page():
                     df_hrate_control = df_hrate_full.loc[df_hrate_full['user_id'].isin(control_ids)]
                     st.subheader("Control Group Heart Rate Data")
                     st.dataframe(df_hrate_control)
-                    ste.download_button(
+                    st.download_button(
                         "Press to Download CSV",
                         df_hrate_control.to_csv().encode('utf-8'),
                         "df_hrate_control.csv",
@@ -1093,7 +1092,7 @@ def results_page():
 def login_page():
     st.title("User login")
     username = st.text_input("username")
-    password = st.text_input("password", type="password")
+    password = st.text_input("password", type="password", autocomplete="off")
 
     if 'login-state' in st.session_state.keys():
         del st.session_state['login-state']
@@ -1115,7 +1114,7 @@ def login_page():
                 st.session_state["login-state"] = True
                 st.session_state["login-username"] = username
                 st.session_state["page"] = "input"
-                st.experimental_rerun()
+                st.rerun()()
             else:
                 st.error("username or password is wrong")
         except Exception as err:
@@ -1132,7 +1131,10 @@ def tutorial_page():
     elif page == "How to start":
         with open('markdown/how_to_start.md', 'r', encoding='utf-8') as markdown_file:
             markdown_text = markdown_file.read()
-    # 显示Markdown内容
+            #update path to static folder from ../static to ../app/static
+            markdown_text = markdown_text.replace("../static", "../app/static")
+
+    # Display Markdown content
     st.markdown(markdown_text, unsafe_allow_html=True)
     if page == "Setting up":
         config_file = st.file_uploader("Upload config file", type=['yaml', 'example','txt'])
@@ -1145,8 +1147,6 @@ def tutorial_page():
                 # write content as string data into the file
                 f.write(config_file.getvalue().decode("utf-8"))
             st.success("Update success!")
-
-
 
 def main():
     # dashboard title
@@ -1177,7 +1177,7 @@ def main():
             updateCurrentDbByUsername(session.get("login-username"), session.get('current_db'))
             if 'selected_users' in session.keys():
                 del session['selected_users'] 
-            st.experimental_rerun()
+            st.rerun()()
 
         if(session["current_db"] != ""):
             garmin_df = get_garmin_df(get_db_engine())
@@ -1189,7 +1189,6 @@ def main():
         import_page()
     elif session.get("page") == "results":
         results_page()
-
 
 if __name__ == '__main__':
     if not st.session_state.get("page"):

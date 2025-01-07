@@ -4,6 +4,9 @@ WORKDIR /app
 
 COPY . .
 
+# Upgrade pip to the latest version
+RUN pip install --upgrade pip
+
 # Install necessary packages (vim, emacs, git, zsh, etc.)
 RUN apt-get update && apt-get install -y \
     vim \
@@ -12,6 +15,10 @@ RUN apt-get update && apt-get install -y \
     zsh \
     curl \
     postgresql-client \
+    libgdal-dev \
+    gdal-bin \
+    build-essential \
+    g++ \
     && rm -rf /var/lib/apt/lists/*
 
 # Install oh-my-zsh and set the robbyrussell theme as default
@@ -25,6 +32,6 @@ RUN pip install -r requirements.txt
 
 RUN chmod +x /app/inituser_and_start.sh
 
-# 在容器启动时运行 entrypoint.sh 脚本
+# Run the entrypoint script when the container starts
 CMD ["./inituser_and_start.sh"]
 

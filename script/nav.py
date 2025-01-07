@@ -23,16 +23,16 @@ def createNav():
 
     if (loginPage):
         st.session_state["page"] = "login"
-        st.experimental_rerun()
+        st.rerun()()
     if (importPage):
         st.session_state["page"] = "import"
-        st.experimental_rerun()
+        st.rerun()()
     if(inputPage):
         st.session_state["page"] = "input"
-        st.experimental_rerun()
+        st.rerun()()
     if(resultPage):
         st.session_state["page"] = "result"
-        st.experimental_rerun()
+        st.rerun()()
     if(tutorial):
         st.session_state["page"] = "tutorial"
-        st.experimental_rerun()
+        st.rerun()()

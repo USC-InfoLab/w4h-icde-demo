@@ -117,6 +117,8 @@ The following instructions are provided for **Mac ONLY**!
     password: postgres
 ```
 
+- Setup the database?
+
 2. **Install Required Packages:**
 
 From the project directory activate the `venv` and install the necessary packages using `pip`:
@@ -146,6 +148,6 @@ Once the dashboard is started, you can access it via the URL provided by `stream
 
 5. **Load sample data:**
 
+    Follow the getting started?
+
     - Download [synthetic_subject_data.csv](https://drive.google.com/file/d/1yAx63xeIwhI_8_1pUqGX2JWbkuFb8e3l/view?usp=sharing)
-
-
