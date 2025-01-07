@@ -11,22 +11,21 @@ The [Wearables for Health (W4H) Toolkit](https://infolab.usc.edu/projects/W4H/) 
 - **[pyGarminAPI](https://github.com/USC-InfoLab/pyGarminAPI)**: A Python library to interact with the Garmin API.
 - **Analytics Dashboard**: Dashboard demonstrating the W4H capabilities
 
-## Demo Prerequisites
-
-- [Docker Desktop](https://www.docker.com/products/docker-desktop/)
-- [PostgreSQL](https://www.postgresql.org/) instance with connection information
-- [Python](https://www.python.org/) 3.12 and `pip` (if running from source)
-- [pgAdmin](https://www.pgadmin.org/) to access your database (optional)
-
 ## How to Run the Demo
 
-You can run the demo in different ways:
+You can run the demo in 3 different ways:
 
 1. DockerHub image (easiest)
 2. Building a Docker image
 3. From code base
 
 ### 1. DockerHub image
+
+#### Requirements
+
+- [Docker Desktop](https://www.docker.com/products/docker-desktop/)
+- [pgAdmin](https://www.pgadmin.org/)
+- [Postgres.app](https://postgresapp.com/downloads.html)
 
 For this you will need a Postgres database loaded with sample data.
 
@@ -50,6 +49,12 @@ For this you will need a Postgres database loaded with sample data.
     ```
 
 ### 2. Building a Docker image
+
+#### Requirements
+
+- [Docker Desktop](https://www.docker.com/products/docker-desktop/)
+- [pgAdmin](https://www.pgadmin.org/)
+- [Postgres.app](https://postgresapp.com/downloads.html)
 
 1. Set up the PostgreSQL instance with the sample datasets
 2. Clone repository: `git clone https://github.com/USC-InfoLab/w4h-icde-demo.git`
@@ -90,13 +95,19 @@ For this you will need a Postgres database loaded with sample data.
 
 ### 3. From code base
 
+#### Requirements
+
+- [Docker Desktop](https://www.docker.com/products/docker-desktop/)
+- [pgAdmin](https://www.pgadmin.org/)
+- [Postgres.app](https://postgresapp.com/downloads.html)
+
 The following instructions are provided for **Mac ONLY**!
 
 1. **Install PostgreSQL**
 
-- Install [Postgres.app](https://postgresapp.com/downloads.html) and start postgres server
+- Start `Postgres.app` server
 - Verify the installation running `pg_config --version`
-- Verify the connection with pgAdmin using the following credentials:
+- Verify the connection with `pgAdmin`:
 
 ```plaintext
     host: localhost
@@ -116,13 +127,15 @@ From the project directory activate the `venv` and install the necessary package
 ```
 
 3. **Stream Simulation:**
+
 Start the stream simulation service, run the following command:
 
 ```bash
-    python3 stream_sim.py
+    python stream_sim.py
 ```
 
 4. **Start the Dashboard:**
+
 After the stream simulation service is up and running, initiate the dashboard using `streamlit`:
 
 ```bash
