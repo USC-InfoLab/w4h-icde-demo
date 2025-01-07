@@ -1,73 +1,120 @@
-# W4H Toolkit Demo
-## About the W4H Toolkit
-The Wearables for Health (W4H) Integrated Toolkit Repository serves as a centralized hub for managing, analyzing, and visualizing wearable data in a seamless and efficient manner. This repository hosts a suite of open-source tools and frameworks meticulously engineered to facilitate end-to-end processing of wearable data, ranging from data ingestion from various sources to real-time and offline analytics, all the way to insightful visualization. At the core of the toolkit lies the novel Geospatial Multivariate Time Series (GeoMTS) abstraction, which enables streamlined management and analysis of wearable data. The repository encompasses key components such as StreamSim for simulating real-time data streaming, W4H ImportHub for integrating offline datasets, pyGarminAPI and pyFitbitAPI for efficient interaction with popular wearable device APIs, and an Integrated Analytics Dashboard for effective data extraction, presentation, and analysis.
+# W4H Toolkit ICDE Demo
 
-### Toolkit Components
-This toolkit comprises the following tools, each tailored to address specific needs in the wearable data lifecycle:
+Follow this README to set up the W4H ICDE demonstration. Refer to [W4H Toolkit Demonstration Scenario](DEMO_SCENARIO.md) for running the demo.
 
-- **[StreamSim](https://github.com/USC-InfoLab/StreamSim)**: A real-time data streaming simulator tool for tabular data, aiding in testing real-time applications.
+## About
 
-- **[W4H ImportHub](https://github.com/USC-InfoLab/W4H-ImportHub)**: Your gateway for seamlessly integrating stored datasets like CSV files into the W4H platform.
+The [Wearables for Health (W4H) Toolkit](https://infolab.usc.edu/projects/W4H/) is a suite of Open Source tools for managing, analyzing, and visualizing wearable data used in health applications. The Toolkit leverages a novel Geospatial Multivariate Time Series (GeoMTS) abstraction, which enables streamlined management and analysis of wearable data. The ICDE Demo provides a preview of the following W4H Toolkit components:
 
-- **[pyGarminAPI](https://github.com/USC-InfoLab/pyGarminAPI)**: A Python library to interact with the Garmin API, facilitating the retrieval of activity and health data from Garmin devices.
+- **[StreamSim](https://github.com/USC-InfoLab/StreamSim)**: A real-time data streaming simulator tool for tabular data.
+- **[W4H ImportHub](https://github.com/USC-InfoLab/W4H-ImportHub)**: A gateway to ingesting datasets.
+- **[pyGarminAPI](https://github.com/USC-InfoLab/pyGarminAPI)**: A Python library to interact with the Garmin API.
+- **Analytics Dashboard**: Dashboard demonstrating the W4H capabilities
 
-- **Integrated Analytics Dashboard**: Core component for GeoMTS data extraction, presentation, and analysis, supporting both real-time and offline analytics on GeoMTS data. (Source code included in this repo)
+## Demo Prerequisites
 
-- **[Approximate Aggregate Queries on GeoMTS](https://github.com/USC-InfoLab/fft_approximate)**: A PostgreSQL extension `fft_approximate` for quickly answering aggregate range queries on time series data using an approximate approach.
+- [Docker Desktop](https://www.docker.com/products/docker-desktop/)
+- [PostgreSQL](https://www.postgresql.org/) instance with connection information
+- [Python](https://www.python.org/) 3.12 and `pip` (if running from source)
+- [pgAdmin](https://www.pgadmin.org/) to access your database (optional)
 
-## Running the Demo
+## How to Run the Demo
 
-### Prerequisites
-- Docker
-- pgAdmin
-- PostgreSQL
-- Python and `pip` (if running without Docker)
+You can run the demo in different ways:
 
-### Setup
-1. Configure Database Properties
-    - Copy the example configuration file:
-        ```shell
-        cp static/config.yaml.example conf/config.yaml
-        ```
-    - Edit the copied file (`conf/config.yaml`) to specify your database properties:
-        - `dbms`: Set to 'postgresql'
-        - `host`: Your database host
-            - macOS and Windows machines should use `host.docker.internal`
-            - Linux machines should use `localhost`
-        - `port`: Your database port
-        - `user`: Your database username
-        - `password`: Your database password
+1. DockerHub image (easiest)
+2. Building a Docker image
+3. From code base
+
+### 1. DockerHub image
+
+For this you will need a Postgres database loaded with sample data.
+
+1. Set up the PostgreSQL instance with the sample datasets
+2. In Docker download the `w4h:icde-demo` image from DockerHub
+3. Configure access to your Postgres instance:
+
+```bash
+    mkdir icde-demo
+    cd icde-demo
+    mkdir conf
+    cd conf
+    wget https://raw.githubusercontent.com/USC-InfoLab/w4h-icde-demo/refs/heads/main/config/config.yaml.example
+    cp config.yaml.example config.yaml #configure with your Postgres database information
+```
+
+4. Run the container:
+
+    ```bash
+    docker run -dp 8501:8501 -v ${PWD}/conf:/app/conf uscimsc/w4h:latest
+    ```
+
+### 2. Building a Docker image
+
+1. Set up the PostgreSQL instance with the sample datasets
+2. Clone repository: `git clone https://github.com/USC-InfoLab/w4h-icde-demo.git`
+3. Configure access to your Postgres instance:
+
+    ```bash
+    cd conf
+    cp config.yaml.example config.yaml #configure with your Postgres database information
+    ```
+
+4. **Build Docker Image:**:
+
+    ```shell
+    docker build -t uscimsc/w4h:icde-demo .
+    ```
+
+5. Create and configure `config.yaml` to access your Postgres database instance:
+
+    ```bash
+    cd ./conf
+    cp config.yaml.example config.yaml #configure with your Postgres database information
+    ```
+
+6. **Run the Container:** To start a container from the image, use the following command:
+
+```bash
+    cd w4h-icde-demo
     
-    Make sure your PostgreSQL database is populated with the necessary data
-    - **Note:** If you plan to use Docker to run the demo, you can simply add the data within the ImportHub in the Toolkit
+    #build the image
+    docker build -t uscimsc/w4h:icde-demo .
 
-### Running the Demo Using Docker
-1. **Build Docker Image:** First, navigate to the root directory and build the Docker image:
-    ```shell
-    docker build -t uscimsc/w4h:demo .
-    ```
-2. **Run the Container:** To start a container from the image, use the following command:
-    ```shell
-    docker run -dp 8501:8501 -v {your_conf_directory_absolute_path}:/app/conf uscimsc/w4h:demo
-    ```
-3. **Access the Dashboard**: After the container is up and running, you can access the dashboard at [http://localhost:8501](http://localhost:8501)
+    #run the container
+    docker run -dp 8501:8501 -v ./conf:/app/conf uscimsc/w4h:icde-demo
 
-### Running the Demo Without Docker
-1. **Install Required Packages:**
-First, navigate to the project directory and install the necessary packages using `pip`:
-    ```bash
-    pip install -r requirements.txt
-    ```
+    #run in interactive mode for debugging XXX: dashboard not working with this
+    docker run -it -p 8501:8501 -v ./conf:/app/conf uscimsc/w4h:icde-demo /bin/zsh
+```
 
-2. **Stream Simulation:**
-To start the stream simulation service, run the following command:
-    ```bash
-    python stream_sim.py
-    ```
+### 3. From code base
 
-3. **Start the Dashboard:**
+1. Set up the PostgreSQL instance with the sample datasets
+
+- For example using [Postgres.app](https://postgresapp.com/downloads.html) on Mac
+- Verify the installation running `pg_config --version`
+
+2. **Install Required Packages:**
+
+From the project directory install the necessary packages using `pip`:
+
+```bash
+    pip3 install -r requirements.txt
+```
+
+3. **Stream Simulation:**
+Start the stream simulation service, run the following command:
+
+```bash
+    python3 stream_sim.py
+```
+
+4. **Start the Dashboard:**
 After the stream simulation service is up and running, initiate the dashboard using `streamlit`:
-    ```bash
+
+```bash
     streamlit run viz.py
-    ```
-    Once the dashboard is started, you can access it via the URL provided by `streamlit` in your terminal.
+```
+
+Once the dashboard is started, you can access it via the URL provided by `streamlit` in your terminal.
