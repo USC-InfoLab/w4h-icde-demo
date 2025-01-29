@@ -119,13 +119,13 @@ def get_data(session=None, real_time=False) -> pd.DataFrame:
         end_date = session.get('end_date')
         db_conn = get_db_engine()
         # query heart rate
-        df_hrate = pd.read_sql(f"SELECT * FROM {DB_TABLE} WHERE Date(timestamp) >= Date(%s) AND Date(timestamp) <= Date(%s)", db_conn, params=[start_date, end_date])
+        df_hrate = pd.read_sql(f"SELECT * FROM {DB_TABLE} WHERE Date(timestamp) >= Date(%s) AND Date(timestamp) <= Date(%s)", db_conn, params=(start_date, end_date))
         df_hrate.sort_values(by=['timestamp'], inplace=True)
         # query calories
-        df_calories = pd.read_sql(f"SELECT * FROM {DB_CALORIES_TABLE} WHERE Date(timestamp) >= Date(%s) AND Date(timestamp) <= Date(%s)", db_conn, params=[start_date, end_date])
+        df_calories = pd.read_sql(f"SELECT * FROM {DB_CALORIES_TABLE} WHERE Date(timestamp) >= Date(%s) AND Date(timestamp) <= Date(%s)", db_conn, params=(start_date, end_date))
         df_calories.sort_values(by=['timestamp'], inplace=True)
         # query coordinates
-        df_coords = gpd.read_postgis(f"SELECT * FROM {DB_COORDINATES_TABLE} WHERE Date(timestamp) >= Date(%s) AND Date(timestamp) <= Date(%s)", db_conn, params=[start_date, end_date], geom_col='value')
+        df_coords = gpd.read_postgis(f"SELECT * FROM {DB_COORDINATES_TABLE} WHERE Date(timestamp) >= Date(%s) AND Date(timestamp) <= Date(%s)", db_conn, params=(start_date, end_date), geom_col='value')
         df_coords.sort_values(by=['timestamp'], inplace=True)
         
     df_hrate['timestamp'] = pd.to_datetime(df_hrate['timestamp'])
@@ -708,7 +708,7 @@ def results_page():
         if user_id_dtype == np.int64:
             user_id_dtype = int
         # else if string
-        elif user_id_dtype == np.object:
+        elif user_id_dtype == object:
             user_id_dtype = str
         # cast subject ids and control ids to the same dtype as df_hrate dtype
         subject_ids = [user_id_dtype(item) for item in subject_ids]
@@ -770,7 +770,8 @@ def results_page():
             user_data = df_coords[df_coords["user_id"] == user_id]
             df = pd.DataFrame(columns=['coordinates', 'width'])
             dict = {"coordinates": [[y,x] for y,x in zip(user_data.value.y,user_data.value.x)], "width": 5}
-            df = df.append(dict,ignore_index=True)
+            df = pd.concat([df, pd.DataFrame([dict])], ignore_index=True)
+
             layers += create_layer(df, color_lookup[user_id])
             # user_trajectories[user_id] = {"coordinates": [[y,x] for y,x in zip(user_data.value.y,user_data.value.x)], "width": 5}
 
