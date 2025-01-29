@@ -144,7 +144,7 @@ def populate_tables(df: pd.DataFrame, db_name: str, mappings: dict, config_path=
     
     # Ensure all unique users from the dataframe exist in the user table
     unique_users = df[mappings[default_user_id]].unique().astype(str)
-    existing_users = session.query(Table(user_table_name, MetaData(bind=engine), autoload=True).c[default_user_id]).all()
+    existing_users = session.query(Table(user_table_name, MetaData(), autoload_with=engine).c[default_user_id]).all()
     existing_users = [x[0] for x in existing_users]
 
     # Identify users that are not yet in the database
