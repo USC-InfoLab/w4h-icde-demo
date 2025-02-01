@@ -103,7 +103,9 @@ For this you will need a Postgres database loaded with sample data.
 
 The following instructions are provided for **Mac ONLY**!
 
-1. **Install PostgreSQL**
+#### Run the Demo
+
+Start PostgreSQL:
 
 - Start `Postgres.app` server
 - Verify the installation running `pg_config --version`
@@ -117,37 +119,21 @@ The following instructions are provided for **Mac ONLY**!
     password: postgres
 ```
 
-- Setup the database?
-
-2. **Install Required Packages:**
-
-From the project directory activate the `venv` and install the necessary packages using `pip`:
+From the project directory:
 
 ```bash
     source venv/bin/activate
     pip install -r requirements.txt
+
+    python stream_sim.py&  # Start the stream simulation service in the background or separate terminal
+
+    streamlit run viz.py  # Start streamlit App at http://localhost:8501/
 ```
 
-3. **Stream Simulation:**
+Load the data:
+- Login in the dashboard as 'admin' with password 'admin'
+- Ignore errors and head to ImportHup:
+    - Create a database, name it 'demo'. Click 'Create database'. You should see a confirmation `Database 'demo' created!`
 
-Start the stream simulation service, run the following command:
-
-```bash
-    python stream_sim.py
-```
-
-4. **Start the Dashboard:**
-
-After the stream simulation service is up and running, initiate the dashboard using `streamlit`:
-
-```bash
-    streamlit run viz.py
-```
-
-Once the dashboard is started, you can access it via the URL provided by `streamlit` in your terminal.
-
-5. **Load sample data:**
-
-    Follow the getting started?
-
-    - Download [synthetic_subject_data.csv](https://drive.google.com/file/d/1yAx63xeIwhI_8_1pUqGX2JWbkuFb8e3l/view?usp=sharing)
+    - Under 'Choose a CSV file' click 'Browse files', upload [synthetic_subject_data.csv](https://drive.google.com/file/d/1yAx63xeIwhI_8_1pUqGX2JWbkuFb8e3l/view?usp=sharing), check 'Populate subject table?', click 'Populate Database'. You should see a confirmation 'Database populated!'.
+    - Under 'Choose a CSV file' click 'Browse files', upload [synthetic_timeseries_data.csv](https://drive.google.com/open?id=1EvpYG1KKm51YlDUQ_ezDCNaVCLiS8tF4&usp=drive_fs), uncheck 'Populate subject table?', scroll down and click 'Populate Database'.
