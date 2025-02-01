@@ -103,37 +103,29 @@ For this you will need a Postgres database loaded with sample data.
 
 The following instructions are provided for **Mac ONLY**!
 
-#### Run the Demo
-
-Start PostgreSQL:
+#### Start the Dashboard
 
 - Start `Postgres.app` server
-- Verify the installation running `pg_config --version`
-- Verify the connection with `pgAdmin`:
-
+    - Verify the installation running `pg_config --version`
+    - Verify the connection with `pgAdmin`
 ```plaintext
-    host: localhost
-    port: 5432
-    maintenance database: postgres
-    user: postgres
-    password: postgres
+            host: localhost
+            port: 5432
+            maintenance database: postgres
+            user: postgres
+            password: postgres
 ```
-
-From the project directory:
-
+- Start the App
 ```bash
     source venv/bin/activate
     pip install -r requirements.txt
-
-    python stream_sim.py&  # Start the stream simulation service in the background or separate terminal
-
-    streamlit run viz.py  # Start streamlit App at http://localhost:8501/
+    python stream_sim.py&  
+    streamlit run viz.py  #starts at: http://localhost:8501/
 ```
-
-Load the data:
-- Login in the dashboard as 'admin' with password 'admin'
-- Ignore errors and head to ImportHup:
-    - Create a database, name it 'demo'. Click 'Create database'. You should see a confirmation `Database 'demo' created!`
-
-    - Under 'Choose a CSV file' click 'Browse files', upload [synthetic_subject_data.csv](https://drive.google.com/file/d/1yAx63xeIwhI_8_1pUqGX2JWbkuFb8e3l/view?usp=sharing), check 'Populate subject table?', click 'Populate Database'. You should see a confirmation 'Database populated!'.
-    - Under 'Choose a CSV file' click 'Browse files', upload [synthetic_timeseries_data.csv](https://drive.google.com/open?id=1EvpYG1KKm51YlDUQ_ezDCNaVCLiS8tF4&usp=drive_fs), uncheck 'Populate subject table?', scroll down and click 'Populate Database'.
+- Load the data:
+    - Login in the dashboard as 'admin' with password 'admin' (ignore errors if any)
+    - Open ImportHup
+    - Select 'Create new W4H database instance' and create 'demo' database clicking 'Create'. You should see a confirmation `Database 'demo' created!`
+    - Under 'Choose existing W4H database instance' and 'Select an existing database', choose 'demo'
+    - Under 'Choose a CSV file' click 'Browse files', and select [synthetic_subject_data.csv](https://drive.google.com/file/d/1yAx63xeIwhI_8_1pUqGX2JWbkuFb8e3l/view?usp=sharing), check 'Populate subject table?', click 'Populate Database'. You should see a confirmation 'Database populated!'.
+    - Under 'Choose a CSV file' click 'Browse files', upload [synthetic_timeseries_data.csv](https://drive.google.com/open?id=1EvpYG1KKm51YlDUQ_ezDCNaVCLiS8tF4&usp=drive_fs), uncheck 'Populate subject table?', scroll down and click 'Populate Database'. Be patient this step takes some time!

@@ -1,10 +1,10 @@
-# W4H Toolkit Demonstration Scenario
+# W4H Toolkit Demo Scenario
 
-Follow this steps to demonstrate the W4H Toolkit:
+## Login and Data Upload
 
 1. Access the dashboard at [http://localhost:8501](http://localhost:8501)
 2. Login with username `admin` and password `admin`
-3. Create/Manage your database: Click the "import page" button on the left side of the dashboard, you will see a page like this:
+3. Import sample data with ImportHub: Click the "" button on the left side of the dashboard, you will see a page like this:
 
     ![import_page_create](static/import_page_create.png)
 
@@ -21,7 +21,7 @@ Follow this steps to demonstrate the W4H Toolkit:
 
     ![create_success](./static/create_success.png)
 
-    Third, select "Choose existing W4H database instance" 
+    Third, select "Choose existing W4H database instance"
 
     ![choose_exist_db](./static/choose_exist_db.png)
 
