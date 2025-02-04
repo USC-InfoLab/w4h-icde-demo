@@ -1,4 +1,4 @@
-FROM python:3.8-slim
+FROM python:latest
 
 WORKDIR /app
 
@@ -28,10 +28,14 @@ RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master
 # Set zsh as the default shell
 RUN chsh -s $(which zsh)
 
-RUN pip install -r requirements.txt
+#create venv
+#RUN python -m venv /app/venv
+# pip install --upgrade pip
+# Install Python dependencies
+#RUN pip install -r requirements.txt
 
-RUN chmod +x /app/inituser_and_start.sh
+#RUN chmod +x /app/inituser_and_start.sh
 
 # Run the entrypoint script when the container starts
-CMD ["./inituser_and_start.sh"]
+#CMD ["./inituser_and_start.sh"]
 

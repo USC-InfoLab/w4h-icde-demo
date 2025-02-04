@@ -11,6 +11,8 @@ The [Wearables for Health (W4H) Toolkit](https://infolab.usc.edu/projects/W4H/) 
 - **[pyGarminAPI](https://github.com/USC-InfoLab/pyGarminAPI)**: A Python library to interact with the Garmin API.
 - **Analytics Dashboard**: Dashboard demonstrating the W4H capabilities
 
+See also the [W4H Toolkit for Acquisition, Storage, Analysis and Visualization of Data from Wearable Devices](https://youtu.be/67a8kuMjSAU) video demonstration.
+
 ## How to Run the Demo
 
 You can run the demo in 3 different ways:
@@ -53,36 +55,10 @@ For this you will need a Postgres database loaded with sample data.
 #### Requirements
 
 - [Docker Desktop](https://www.docker.com/products/docker-desktop/)
-- [pgAdmin](https://www.pgadmin.org/)
-- [Postgres.app](https://postgresapp.com/downloads.html)
 
-1. Set up the PostgreSQL instance with the sample datasets
-2. Clone repository: `git clone https://github.com/USC-InfoLab/w4h-icde-demo.git`
-3. Configure access to your Postgres instance:
+#### Build Docker Image and run the Container
 
-    ```bash
-    cd conf
-    cp config.yaml.example config.yaml #configure with your Postgres database information
-    ```
-
-4. **Build Docker Image:**:
-
-    ```shell
-    docker build -t uscimsc/w4h:icde-demo .
-    ```
-
-5. Create and configure `config.yaml` to access your Postgres database instance:
-
-    ```bash
-    cd ./conf
-    cp config.yaml.example config.yaml #configure with your Postgres database information
-    ```
-
-6. **Run the Container:** To start a container from the image, use the following command:
-
-```bash
-    cd w4h-icde-demo
-    
+```shell
     #build the image
     docker build -t uscimsc/w4h:icde-demo .
 
@@ -91,6 +67,8 @@ For this you will need a Postgres database loaded with sample data.
 
     #run in interactive mode for debugging XXX: dashboard not working with this
     docker run -it -p 8501:8501 -v ./conf:/app/conf uscimsc/w4h:icde-demo /bin/zsh
+
+    XXX: upload image to docker
 ```
 
 ### 3. From code base
@@ -103,9 +81,9 @@ For this you will need a Postgres database loaded with sample data.
 
 The following instructions are provided for **Mac ONLY**!
 
-#### Start the Dashboard
+#### Start the demo
 
-- Start `Postgres.app` server
+1. Start `Postgres.app` server
     - Verify the installation running `pg_config --version`
     - Verify the connection with `pgAdmin`
 ```plaintext
@@ -115,14 +93,15 @@ The following instructions are provided for **Mac ONLY**!
             user: postgres
             password: postgres
 ```
-- Start the App
+2. Start the dashboard
 ```bash
+    python -m venv venv
     source venv/bin/activate
     pip install -r requirements.txt
     python stream_sim.py&  
     streamlit run viz.py  #starts at: http://localhost:8501/
 ```
-- Load the data:
+3. Load the data:
     - Login in the dashboard as 'admin' with password 'admin' (ignore errors if any)
     - Open ImportHup
     - Select 'Create new W4H database instance' and create 'demo' database clicking 'Create'. You should see a confirmation `Database 'demo' created!`
