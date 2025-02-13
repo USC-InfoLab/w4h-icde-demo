@@ -1,5 +1,5 @@
-FROM python:latest
-
+FROM python:latest  
+# Tested with python:3.13.2
 WORKDIR /app
 
 COPY . .
@@ -30,12 +30,13 @@ RUN chsh -s $(which zsh)
 
 #create venv
 #RUN python -m venv /app/venv
-# pip install --upgrade pip
-# Install Python dependencies
-#RUN pip install -r requirements.txt
 
-#RUN chmod +x /app/inituser_and_start.sh
+RUN pip install --upgrade pip
+# Install Python dependencies
+RUN pip install -r requirements.txt
+
+RUN chmod +x /app/inituser_and_start.sh
 
 # Run the entrypoint script when the container starts
-#CMD ["./inituser_and_start.sh"]
+CMD ["./inituser_and_start.sh"]
 
