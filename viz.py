@@ -17,6 +17,7 @@ from script.nav import createNav
 from script.import_hub_main import import_page
 import geopandas as gpd
 from shapely import wkb
+import uuid
 
 import os
 
@@ -1036,17 +1037,17 @@ def results_page():
                             st.subheader('Average Heart Rate')
                             fig_bar1 = get_bar_fig(df_range_hrate_avg_comp, label='Average Heart Rate')
                             # Display chart in Streamlit
-                            st.plotly_chart(fig_bar1, use_container_width=False)
+                            st.plotly_chart(fig_bar1, use_container_width=False,key=f"avg_hrate_{i}")
                         with col2:
                             st.subheader('Minimum Heart Rate')
                             fig_bar2 = get_bar_fig(df_range_hrate_min_comp, label='Minimum Heart Rate')
                             # Display chart in Streamlit
-                            st.plotly_chart(fig_bar2, use_container_width=False)
+                            st.plotly_chart(fig_bar2, use_container_width=False, key=f"min_hrate_{i}")
                         with col3:
                             st.subheader('Maximum Heart Rate')
                             fig_bar3 = get_bar_fig(df_range_hrate_max_comp, label='Maximum Heart Rate')
                             # Display chart in Streamlit
-                            st.plotly_chart(fig_bar3, use_container_width=False)
+                            st.plotly_chart(fig_bar3, use_container_width=False, key=f"max_hrate_{i}")
             
             # Show the dataframes and export to csv if needed
             st.title("Show/Export Data")
@@ -1060,7 +1061,8 @@ def results_page():
                         "Press to Download CSV",
                         df_hrate_full.to_csv().encode('utf-8'),
                         "df_hrate_full.csv",
-                        "text/csv"
+                        "text/csv",
+                        key=uuid.uuid4()
                     )
                 with col2:
                     st.subheader("Selected Subject(s) Heart Rate Data")
@@ -1069,7 +1071,8 @@ def results_page():
                         "Press to Download CSV",
                         df_hrate.to_csv().encode('utf-8'),
                         "df_hrate_subjects.csv",
-                        "text/csv"
+                        "text/csv",
+                        key=uuid.uuid4()
                     )
                 with col3:
                     df_hrate_control = df_hrate_full.loc[df_hrate_full['user_id'].isin(control_ids)]
@@ -1079,7 +1082,8 @@ def results_page():
                         "Press to Download CSV",
                         df_hrate_control.to_csv().encode('utf-8'),
                         "df_hrate_control.csv",
-                        "text/csv"
+                        "text/csv",
+                        key=uuid.uuid4()
                     )
         if not real_time_update:
             # reset dataframes
