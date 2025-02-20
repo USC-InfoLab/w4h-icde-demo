@@ -57,14 +57,21 @@ Download the [DockerHub w4h:icde-demo image](https://hub.docker.com/r/uscimsc/w4
 Build a Docker Image and run the Container:
 
 ```shell
-    #build the image
     docker build -t uscimsc/w4h:icde-demo .
+    docker run -dp 8501:8501 uscimsc/w4h:icde-demo
+```
 
-    #run the container
-    docker run -dp 8501:8501 -v ./conf:/app/conf uscimsc/w4h:icde-demo
+If you wish to start the container in interactive mode:
 
-    #run in interactive mode for debugging XXX: dashboard not working with this
-    docker run -it -p 8501:8501 -v ./conf:/app/conf uscimsc/w4h:icde-demo /bin/zsh
+```shell
+    docker run -it -p 8501:8501 uscimsc/w4h:icde-demo /bin/zsh
+
+    # Start the dashboard
+    python -m venv venv
+    source venv/bin/activate
+    pip install -r requirements.txt
+    python stream_sim.py&  
+    streamlit run viz.py&  # Starts the dashboard at: http://localhost:8501/
 ```
 
 ### 3. From code base
