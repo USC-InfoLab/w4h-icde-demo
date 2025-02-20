@@ -41,7 +41,7 @@ You can then run the demo in 3 different ways:
 2. Building a Docker image
 3. From code base
 
-Once the platform is running, open the dashboard at http://localhost:8501/ and follow [DEMO_SCENARIO.md](DEMO_SCENARIO.md). See also the [video demo](https://youtu.be/67a8kuMjSAU).
+See below for instructions on how to proceeds. Once the W4H toolkit container is running, open the dashboard at http://localhost:8501/ and follow [DEMO_SCENARIO.md](DEMO_SCENARIO.md).
 
 ### 1. DockerHub image
 
