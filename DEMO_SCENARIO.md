@@ -1,75 +1,17 @@
 # W4H Toolkit Demo Scenario
 
-XXX: add video link
+See the [video demo](https://youtu.be/67a8kuMjSAU).
 
 ## Login and Data Upload
 
 1. Access the dashboard at [http://localhost:8501](http://localhost:8501)
-2. Login with username `admin` and password `admin`
-3. Import sample data with ImportHub: Click the "" button on the left side of the dashboard, you will see a page like this:
-
-    ![import_page_create](static/import_page_create.png)
-
-    Let's start from creating a new database instance:  
-    First, Select "Create new W4H database instance"
-
-    ![create_new_db](static/create_new_db.png)
-
-    Second, type in the name of database you want to make, and click "create". In this case we name it "test2"
-
-    ![set_db_name](./static/set_db_name.png)
-
-    If it's created successfully, you will see a message like this: 
-
-    ![create_success](./static/create_success.png)
-
-    Third, select "Choose existing W4H database instance"
-
-    ![choose_exist_db](./static/choose_exist_db.png)
-
-    Select the database you just created
-
-    ![select_exist_db](./static/select_exist_db.png)
-
-    For the Following step, if you need some test file, try to download here:
-
-    - [synthetic_subject_data.csv](../app/static/synthetic_subject_data.csv)
-    - [synthetic_timeseries_data_reduced.csv](../app/static/synthetic_timeseries_data_reduced.csv)  
-
-    Fourth, Upload your subjects csv file, and check "Populate subject table name".
-
-    ![upload_subject_csv](./static/upload_subject_csv.png)
-
-    After making sure corresponding Column are all correct, click "Populate database" at the bottom:
-
-    ![populate_db](./static/populate_db.png)
-
-    Fifth, upload your time series csv file:
-
-    ![upload_time_csv](./static/upload_time_csv.png)
-
-    After making sure corresponding Column are all correct, click "Populate database" at the bottom.
-
-    ![populate_db_time](./static/populate_db_time.png)
-
-    (Optional) Sixth, open your DB management tool, such as PgAdmin4, and check if the data is populated correctly.
-
-    ![pgadmin](./static/pgadmin.png)
-
-4. **Choose your db in the input page, then setup it!**  
-
-    Choose your db in the input page:
-
-    ![input_select_db](./static/input_select_db.png)
-
-    Select the subjects and control group you want to check:
-
-    ![subjects_and_control_group](./static/subjects_and_control_group.png)
-
-    Select if you want to simulate the data, click "show result".
-
-5. **Check the result page**  
-
-    You are there!
-
-    ![result_page](./static/result_page.png)
+2. Login in the dashboard as 'admin' with password 'admin' (ignore errors if any)
+3. Download sample data:
+    - [synthetic_subject_data.csv](https://drive.google.com/file/d/1yAx63xeIwhI_8_1pUqGX2JWbkuFb8e3l/view?usp=sharing)
+    - [synthetic_timeseries_data.csv](https://drive.google.com/open?id=1EvpYG1KKm51YlDUQ_ezDCNaVCLiS8tF4&usp=drive_fs)
+4. Import sample data:
+    - Click 'ImportHub' in the toolbar
+    - Select 'Create new W4H database instance' and click 'Create' to create a 'demo' database . You should see a confirmation 'Database 'demo' created!'
+    - Select 'Choose existing W4H database instance' and 'Select an existing database', choose 'demo'
+    - Under 'Choose a CSV file' click 'Browse files', and select 'synthetic_subject_data.csv', check 'Populate subject table?', click 'Populate Database'. You should see a confirmation 'Database populated!'.
+    - Under 'Choose a CSV file' click 'Browse files', upload 'synthetic_timeseries_data.csv', uncheck 'Populate subject table?', scroll down and click 'Populate Database'. Be patient this step takes some time!

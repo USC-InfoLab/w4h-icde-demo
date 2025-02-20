@@ -1,6 +1,6 @@
 # W4H Toolkit ICDE Demo
 
-Follow this README to set up the W4H ICDE demonstration. Refer to [W4H Toolkit Demonstration Scenario](DEMO_SCENARIO.md) for running the demo.
+W4H Toolkit ICDE demonstration. A video demo is available at [here](https://youtu.be/67a8kuMjSAU).
 
 ## About
 
@@ -13,50 +13,48 @@ The [Wearables for Health (W4H) Toolkit](https://infolab.usc.edu/projects/W4H/) 
 
 See also the [W4H Toolkit for Acquisition, Storage, Analysis and Visualization of Data from Wearable Devices](https://youtu.be/67a8kuMjSAU) video demonstration.
 
-## How to Run the Demo
+## Run the Demo
 
-You can run the demo in 3 different ways:
+The following instructions are provided for **Mac ONLY**!
 
-1. DockerHub image (easiest)
-2. Building a Docker image
-3. From code base
-
-### 1. DockerHub image
-
-#### Requirements
+You will need the following to run the demo:
 
 - [Docker Desktop](https://www.docker.com/products/docker-desktop/)
 - [pgAdmin](https://www.pgadmin.org/)
 - [Postgres.app](https://postgresapp.com/downloads.html)
 
-For this you will need a Postgres database loaded with sample data.
+After you install Docker, pgAdmin and Postgres.app, start `Postgres.app` server and verify the installation:accessible:
+    - Verify the installation running `pg_config --version`
+    - Verify the connection with `pgAdmin`
 
-1. Set up the PostgreSQL instance with the sample datasets
-2. In Docker download the `w4h:icde-demo` image from DockerHub
-3. Configure access to your Postgres instance:
-
-```bash
-    mkdir icde-demo
-    cd icde-demo
-    mkdir conf
-    cd conf
-    wget https://raw.githubusercontent.com/USC-InfoLab/w4h-icde-demo/refs/heads/main/config/config.yaml.example
-    cp config.yaml.example config.yaml #configure with your Postgres database information
+```plaintext
+            host: localhost
+            port: 5432
+            maintenance database: postgres
+            user: postgres
+            password: postgres
 ```
 
-4. Run the container:
+You can then run the demo in 3 different ways:
 
-    ```bash
-    docker run -dp 8501:8501 -v ${PWD}/conf:/app/conf uscimsc/w4h:latest
-    ```
+1. DockerHub image (easiest)
+2. Building a Docker image
+3. From code base
+
+Once the platform is running, open the dashboard at http://localhost:8501/ and follow [DEMO_SCENARIO.md](DEMO_SCENARIO.md). See also the [video demo](https://youtu.be/67a8kuMjSAU).
+
+### 1. DockerHub image
+
+Download the [DockerHub w4h:icde-demo image](https://hub.docker.com/r/uscimsc/w4h) and run the container:
+
+```bash
+    docker pull uscimsc/w4h:icde-demo
+    docker run -dp 8501:8501 uscimsc/w4h:icde-demo
+```
 
 ### 2. Building a Docker image
 
-#### Requirements
-
-- [Docker Desktop](https://www.docker.com/products/docker-desktop/)
-
-#### Build Docker Image and run the Container
+Build a Docker Image and run the Container:
 
 ```shell
     #build the image
@@ -67,44 +65,16 @@ For this you will need a Postgres database loaded with sample data.
 
     #run in interactive mode for debugging XXX: dashboard not working with this
     docker run -it -p 8501:8501 -v ./conf:/app/conf uscimsc/w4h:icde-demo /bin/zsh
-
-    XXX: upload image to docker
 ```
 
 ### 3. From code base
 
-#### Requirements
+From within this repository start the dashboard:
 
-- [Docker Desktop](https://www.docker.com/products/docker-desktop/)
-- [pgAdmin](https://www.pgadmin.org/)
-- [Postgres.app](https://postgresapp.com/downloads.html)
-
-The following instructions are provided for **Mac ONLY**!
-
-#### Start the demo
-
-1. Start `Postgres.app` server
-    - Verify the installation running `pg_config --version`
-    - Verify the connection with `pgAdmin`
-```plaintext
-            host: localhost
-            port: 5432
-            maintenance database: postgres
-            user: postgres
-            password: postgres
-```
-2. Start the dashboard
 ```bash
     python -m venv venv
     source venv/bin/activate
     pip install -r requirements.txt
     python stream_sim.py&  
-    streamlit run viz.py  #starts at: http://localhost:8501/
+    streamlit run viz.py  # Starts the dashboard at: http://localhost:8501/
 ```
-3. Load the data:
-    - Login in the dashboard as 'admin' with password 'admin' (ignore errors if any)
-    - Open ImportHup
-    - Select 'Create new W4H database instance' and create 'demo' database clicking 'Create'. You should see a confirmation `Database 'demo' created!`
-    - Under 'Choose existing W4H database instance' and 'Select an existing database', choose 'demo'
-    - Under 'Choose a CSV file' click 'Browse files', and select [synthetic_subject_data.csv](https://drive.google.com/file/d/1yAx63xeIwhI_8_1pUqGX2JWbkuFb8e3l/view?usp=sharing), check 'Populate subject table?', click 'Populate Database'. You should see a confirmation 'Database populated!'.
-    - Under 'Choose a CSV file' click 'Browse files', upload [synthetic_timeseries_data.csv](https://drive.google.com/open?id=1EvpYG1KKm51YlDUQ_ezDCNaVCLiS8tF4&usp=drive_fs), uncheck 'Populate subject table?', scroll down and click 'Populate Database'. Be patient this step takes some time!
