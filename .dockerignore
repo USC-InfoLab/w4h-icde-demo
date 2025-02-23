@@ -15,7 +15,6 @@ tools
 .idea/
 
 # Don't state conf.py
-conf/
 tools/
 config.yaml
 
