@@ -1,6 +1,6 @@
 # W4H Toolkit ICDE Demo
 
-W4H Toolkit ICDE demonstration. A video demo is available at [here](https://youtu.be/67a8kuMjSAU).
+W4H Toolkit ICDE demonstration. A video demo is available [here](https://youtu.be/67a8kuMjSAU).
 
 ## About
 

@@ -54,7 +54,7 @@ def get_garmin_user_id(db_conn, pattern=None):
     query = f"SELECT user_id FROM {DB_USER_TABLE}"
     params = []
     if pattern:
-        query += f" WHERE subj_id LIKE %s"
+        query += f" WHERE subject_id LIKE %s"
         pattern = f'%{pattern}%'
         params = [pattern]
     # execute the query
@@ -66,7 +66,7 @@ def get_garmin_df(db_conn, pattern=None):
     query = f"SELECT * FROM {DB_USER_TABLE}"
     params = []
     if pattern:
-        query += f" WHERE subj_id LIKE %s"
+        query += f" WHERE subject_id LIKE %s"
         pattern = f'%{pattern}%'
         params = [pattern]
     # execute the query
@@ -74,6 +74,7 @@ def get_garmin_df(db_conn, pattern=None):
 
 
 def calculate_mets(cal_df, user_weights=None):
+
     if not user_weights:
         print('no user weights provided, using default')
         user_weights = dict(zip(cal_df.user_id.unique(), np.ones(cal_df.user_id.nunique()) * 70))
@@ -315,10 +316,10 @@ def input_page(garmin_df):
         return
 
     # preparing data
-    user_ids = garmin_df.subj_id.tolist()
-    rank_options = garmin_df['rank'].unique().tolist()
+    user_ids = garmin_df.subject_id.tolist()
+    # rank_options = garmin_df['rank'].unique().tolist()
     state_of_residence_options = garmin_df['state'].unique().tolist() 
-    drop_type_options = garmin_df['drop_type'].unique().tolist()
+    # drop_type_options = garmin_df['drop_type'].unique().tolist()
     weight_min, weight_max = int(garmin_df.weight.min()), int(garmin_df.weight.max())
     height_min, height_max = int(garmin_df.height.min()), int(garmin_df.height.max())
     age_min, age_max = int(garmin_df.age.min()), int(garmin_df.age.max())
@@ -338,8 +339,8 @@ def input_page(garmin_df):
             options=user_ids,
             default=session.get('selected_users', []))
         
-    selected_rank = []
-    selected_drop_type = []
+    # selected_rank = []
+    # selected_drop_type = []
     selected_state_of_residence = []
     selected_state_of_residence_control = []
     selected_weight_range = []
@@ -419,9 +420,9 @@ def input_page(garmin_df):
             default=session.get('selected_users_control', [])
         )
         
-    selected_rank_control = []
+    # selected_rank_control = []
     selected_state_of_residence_control = []
-    selected_drop_type_control = []
+    # selected_drop_type_control = []
     selected_weight_range_control = []
     selected_height_range_control = []
     selected_age_range_control = []
@@ -583,7 +584,7 @@ def input_page(garmin_df):
         
         # Filter the dataframe based on the selected criteria for subjects
         if subject_selection_type == 'id':
-            subjects_df = garmin_df.query('subj_id in @selected_users')
+            subjects_df = garmin_df.query('subject_id in @selected_users')
         else:
             # subjects_df = garmin_df.query('rank == @selected_rank and drop_type == @selected_drop_type and weight >= @selected_weight_range[0] and weight <= @selected_weight_range[1] and height >= @selected_height_range[0] and height <= @selected_height_range[1] and age >= @selected_age_range[0] and age <= @selected_age_range[1]')
             subjects_df = garmin_df.query('state in @selected_state_of_residence and weight >= @selected_weight_range[0] and weight <= @selected_weight_range[1] and height >= @selected_height_range[0] and height <= @selected_height_range[1] and age >= @selected_age_range[0] and age <= @selected_age_range[1]')
@@ -616,9 +617,9 @@ def results_page():
     
    
     subjects_df = session.get('subjects_df')
-    subject_ids = subjects_df.subj_id.tolist()
+    subject_ids = subjects_df.subject_id.tolist()
     control_df = session.get('control_df')
-    control_ids = control_df.subj_id.tolist()
+    control_ids = control_df.subject_id.tolist()
     
     window_size = session['window_size']
     real_time_update = session['real_time_update']

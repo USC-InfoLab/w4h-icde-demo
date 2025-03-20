@@ -1,75 +1,65 @@
-# Use W4h dashboard to track your patients' health data
+# ICDE Demo
 
-## Introduction
 
-The W4H GeoMTS dashboard is designed to provide visualization and analysis capabilities for GeoMTS data catered specifically for Apple Watch demo purposes.
+## Demo Scenario
+See also ![DEMO_SCENARIO.md](https://github.com/USC-InfoLab/w4h-icde-demo/blob/main/DEMO_SCENARIO.md)
 
-## How to play with it
-
-0. **Log in**  
-    We have provided a default account for you to test the system. In the future, w4h will be polished to support multiple users and password management.
-    The default account is:
+1. **Log in**  
+    Login with:
     > username: admin  
-      password: admin
+    > password: admin
 
-1. **Create/Manage your database instance in your DB server:**  
+2. **Create test2 database**  
 
-    At this moment, you should have read the Setting up tutorial and set up your database server.
-    If you already have data in proper format in your database, you can skip this step.  
     Click the "import page" button on the left side of the dashboard, you will see a page like this:  
 
     ![import_page_create](../static/import_page_create.png)
 
-    Let's start from creating a new database instance:  
-
-    First, Select "Create new W4H database instance"
+    Create a new database instance by selecting "Create new W4H database instance":
 
     ![create_new_db](../static/create_new_db.png)
 
-    Second, type in the name of database you want to make, and click *create*. In this case we name it *"*test2*
+    Input the database name and click *create*: 
 
     ![set_db_name](../static/set_db_name.png)
 
-    If it's created successfully, you will see a message like this:  
+    You should see the following:
 
     ![create_success](../static/create_success.png)
 
-    Third, select "Choose existing W4H database instance"
+    Select "Choose existing W4H database instance":
 
     ![choose_exist_db](../static/choose_exist_db.png)
 
-    Select the database you just created
+    Select the database you just created:
 
     ![select_exist_db](../static/select_exist_db.png)
 
-    For the Following step, if you need some test file, try to download here:
+    Download sample data:
 
     [synthetic_subject_data.csv](https://drive.google.com/file/d/1yAx63xeIwhI_8_1pUqGX2JWbkuFb8e3l/view?usp=sharing)  
     [synthetic_timeseries_data_reduced.csv](https://drive.google.com/file/d/1EvpYG1KKm51YlDUQ_ezDCNaVCLiS8tF4/view?usp=sharing)  
 
-    Fourth, Upload your subjects csv file, and check "Populate subject table name".
+    Check "Populate subject table" and upload `synthetic_subject_data.csv`:
 
     ![upload_subject_csv](../static/upload_subject_csv.png)
 
-    After making sure corresponding Column are all correct, click "Populate database" at the bottom.
+    Click "Populate database" at the bottom:
 
     ![populate_db](../static/populate_db.png)
 
-    Fifth, upload your time series csv file
+    Upload `synthetic_timeseries_data_reduced.csv`:
 
     ![upload_time_csv](../static/upload_time_csv.png)
 
-    After making sure corresponding Column are all correct, click "Populate database" at the bottom.  
+    Click "Populate database":
 
     ![populate_db_time](../static/populate_db_time.png)
 
-    (Optional)Sixth, open your DB management tool, such as PgAdmin4, and check if the data is populated correctly.
 
-    ![pgadmin](../static/pgadmin.png)
+2. **Data analytics on the test2 dataset**  
 
-2. **Choose your db in the input page, then setup it!**  
-
-    Choose your db in the input page
+    Click on the "Input Page" button and select test2 from the dropdown:
 
     ![input_select_db](../static/input_select_db.png)
 
@@ -77,10 +67,16 @@ The W4H GeoMTS dashboard is designed to provide visualization and analysis capab
 
     ![subjects_and_control_group](../static/subjects_and_control_group.png)
 
-    Select if you want to simulate the data. Click "show result"
+    Click "show result" to display the data analytics.
 
-3. **Check the result page**  
+3. **Streaming data analytics on the test2 dataset**  
 
-    You are there!
+    Click on the "Input Page" button and select test2 from the dropdown:
 
-    ![result_page](../static/result_page.png)
+    ![input_select_db](../static/input_select_db.png)
+
+    Select the subjects and control group you want to check
+
+    ![subjects_and_control_group](../static/subjects_and_control_group.png)
+
+    Click "show result" to display the data analytics.
