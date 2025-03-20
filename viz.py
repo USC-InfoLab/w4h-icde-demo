@@ -84,16 +84,12 @@ def calculate_mets(cal_df, user_weights=None):
     return mets_df
     # return pd.DataFrame(columns=['user_id', 'timestamp', 'value'])
 
-
-
 # dashboard setup
 st.set_page_config(
-    page_title="Real-Time Apple-Watch Heart-Rate Monitoring Dashboard",
+    page_title="W4H Dashboard",
     page_icon="🏥",
     layout="wide",
 )
-
-
 
 # Flask server API endpoint
 SERVER_URL = f"http://{HOST}:{PORT}"
@@ -608,7 +604,13 @@ def input_page(garmin_df):
 
 
 # Define the results page
-def results_page():
+def settings_page():
+    # print Database settings and status
+    # st.header("Database Settings")
+    # existing_databases = get_existing_databases(config_path)  # This function needs to be implemented.
+    # List components
+    # StreamSim, METs calculator
+
     # Get the session state
     session = st.session_state
     if session is None:
@@ -675,9 +677,9 @@ def results_page():
     )
     
     # Add a button to go back to the input page
-    if st.button("Back to Inputs"):
+    if st.button("Back to Analyze Dataset"):
         # Go back to the input page
-        session["page"] = "input"
+        session["page"] = "analyze"
         st.rerun()()
         
     # creating a single-element container
@@ -1096,21 +1098,21 @@ def results_page():
 
 
 def login_page():
-    st.title("User login")
-    username = st.text_input("username")
-    password = st.text_input("password", type="password", autocomplete="off")
+    st.title("Sign In")
+    username = st.text_input("Username")
+    password = st.text_input("Password", type="password", autocomplete="off")
 
     if 'login-state' in st.session_state.keys():
         del st.session_state['login-state']
 
-    if st.button("login"):
+    if st.button("Login"):
         conn = sqlite3.connect('user.db')
         cursor = conn.cursor()
         try:
             cursor.execute('''select password,salt from users where username = ?''',(username,))
             row = cursor.fetchone()
             if row is None:
-                st.error("user not exist!")
+                st.error("username or password is wrong")
                 conn.close()
                 return
             hasher = hashlib.sha256()
@@ -1119,7 +1121,7 @@ def login_page():
             if (row[0] == encodePwd):
                 st.session_state["login-state"] = True
                 st.session_state["login-username"] = username
-                st.session_state["page"] = "input"
+                st.session_state["page"] = "documentation"
                 st.rerun()()
             else:
                 st.error("username or password is wrong")
@@ -1128,14 +1130,13 @@ def login_page():
             st.error("something wrong in the server")
         conn.close()
 
-def tutorial_page():
-    page = st.selectbox("Select a tutorial", ["Setting up", "How to start"])
+def documentation_page():
+    st.title("Documentation")
 
-    if page == "Setting up":
-        with open('markdown/setting_up.md', 'r', encoding='utf-8') as markdown_file:
-            markdown_text = markdown_file.read()
-    elif page == "How to start":
-        with open('markdown/how_to_start.md', 'r', encoding='utf-8') as markdown_file:
+    page = st.selectbox("Documentation pages", ["Demo Instructions"])
+
+    if page == "Demo Instructions":
+        with open('markdown/demo_instructions.md', 'r', encoding='utf-8') as markdown_file:
             markdown_text = markdown_file.read()
             #update path to static folder from ../static to ../app/static
             markdown_text = markdown_text.replace("../static", "../app/static")
@@ -1156,7 +1157,6 @@ def tutorial_page():
 
 def main():
     # dashboard title
-    st.title("W4H Integrated Toolkit")
     session = st.session_state
     createNav()
     
@@ -1164,11 +1164,11 @@ def main():
     if session is None:
         st.error("Please run the app first.")
         return
-    if session.get("page") == "tutorial":
-        tutorial_page()
+    if session.get("page") == "documentation":
+        documentation_page()
     elif session.get("login-state",False) == False or session.get("page","login") == "login":
         login_page()
-    elif session.get("page") == "input":
+    elif session.get("page") == "analyze":
         # if session doesn't contain key "current_db"
         if not session.get("current_db"):
             session["current_db"] = getCurrentDbByUsername(session.get("login-username"))
@@ -1193,8 +1193,8 @@ def main():
             input_page(garmin_df)
     elif session.get("page") == "import":
         import_page()
-    elif session.get("page") == "results":
-        results_page()
+    elif session.get("page") == "settings":
+        settings_page()
 
 if __name__ == '__main__':
     if not st.session_state.get("page"):

@@ -1,6 +1,6 @@
 # W4H Toolkit ICDE Demo
 
-W4H Toolkit ICDE demonstration. A video demo is available [here](https://youtu.be/67a8kuMjSAU).
+W4H Toolkit ICDE demonstration. A video demo is available at [here](https://youtu.be/67a8kuMjSAU).
 
 ## About
 
@@ -76,6 +76,7 @@ If you wish to start the container in interactive mode:
 
 ### 3. From code base
 
+Edit `config.yaml` and replace database host with `localhost`.
 From within this repository start the dashboard:
 
 ```bash

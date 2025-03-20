@@ -1,16 +1,15 @@
-# ICDE Demo
+## ICDE Demo
 
-## Demo Scenario
+### Demo Scenario
 
-See also ![DEMO_SCENARIO.md](https://github.com/USC-InfoLab/w4h-icde-demo/blob/main/DEMO_SCENARIO.md)
+Follow these steps:
 
 1. **Log in**  
     Login with:
     > username: admin  
     > password: admin
 
-2. **Create test2 database**  
-
+2. **Create test2 database**
     Click the "import page" button, you will see a page like this:
 
     ![import_page_create](../static/import_page_create.png)
@@ -79,3 +78,5 @@ See also ![DEMO_SCENARIO.md](https://github.com/USC-InfoLab/w4h-icde-demo/blob/m
     ![subjects_and_control_group](../static/subjects_and_control_group.png)
 
     Click "show result" to display the data analytics.
+
+See also [DEMO_SCENARIO.md](https://github.com/USC-InfoLab/w4h-icde-demo/blob/main/DEMO_SCENARIO.md)
