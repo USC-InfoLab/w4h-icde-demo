@@ -1,7 +1,7 @@
 # ICDE Demo
 
-
 ## Demo Scenario
+
 See also ![DEMO_SCENARIO.md](https://github.com/USC-InfoLab/w4h-icde-demo/blob/main/DEMO_SCENARIO.md)
 
 1. **Log in**  
@@ -11,7 +11,7 @@ See also ![DEMO_SCENARIO.md](https://github.com/USC-InfoLab/w4h-icde-demo/blob/m
 
 2. **Create test2 database**  
 
-    Click the "import page" button on the left side of the dashboard, you will see a page like this:  
+    Click the "import page" button, you will see a page like this:
 
     ![import_page_create](../static/import_page_create.png)
 
@@ -19,7 +19,7 @@ See also ![DEMO_SCENARIO.md](https://github.com/USC-InfoLab/w4h-icde-demo/blob/m
 
     ![create_new_db](../static/create_new_db.png)
 
-    Input the database name and click *create*: 
+    Input the database name and click *create*:
 
     ![set_db_name](../static/set_db_name.png)
 
@@ -56,8 +56,7 @@ See also ![DEMO_SCENARIO.md](https://github.com/USC-InfoLab/w4h-icde-demo/blob/m
 
     ![populate_db_time](../static/populate_db_time.png)
 
-
-2. **Data analytics on the test2 dataset**  
+3. **Data analytics on the test2 dataset**  
 
     Click on the "Input Page" button and select test2 from the dropdown:
 
@@ -69,7 +68,7 @@ See also ![DEMO_SCENARIO.md](https://github.com/USC-InfoLab/w4h-icde-demo/blob/m
 
     Click "show result" to display the data analytics.
 
-3. **Streaming data analytics on the test2 dataset**  
+4. **Streaming data analytics on the test2 dataset**  
 
     Click on the "Input Page" button and select test2 from the dropdown:
 
