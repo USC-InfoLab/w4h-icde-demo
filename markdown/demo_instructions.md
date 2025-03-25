@@ -10,7 +10,7 @@ Follow these steps:
     > password: admin
 
 2. **Create test2 database**
-    Click the "import page" button, you will see a page like this:
+    Click the "import dataset" button, you will see a page like this:
 
     ![import_page_create](../static/import_page_create.png)
 
@@ -57,13 +57,17 @@ Follow these steps:
 
 3. **Data analytics on the test2 dataset**  
 
-    Click on the "Input Page" button and select test2 from the dropdown:
+    Click on the "Analyze Dataset" button and select test2 from the dropdown:
 
     ![input_select_db](../static/input_select_db.png)
 
     Select the subjects and control group you want to check
 
     ![subjects_and_control_group](../static/subjects_and_control_group.png)
+
+    Set the analysis configuration
+
+    ![analysis_configuration](../static/analysis_configuration.png)
 
     Click "show result" to display the data analytics.
 
@@ -76,6 +80,10 @@ Follow these steps:
     Select the subjects and control group you want to check
 
     ![subjects_and_control_group](../static/subjects_and_control_group.png)
+
+    Set the analysis configuration for streaming data 
+
+    ![streaming_analysis_configuration](../static/streaming_analysis_configuration.png)
 
     Click "show result" to display the data analytics.
 

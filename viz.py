@@ -600,17 +600,11 @@ def input_page(garmin_df):
         
         # Go to the results page
         session['page'] = "results"
-        st.rerun()()
+        st.rerun()
 
 
 # Define the results page
-def settings_page():
-    # print Database settings and status
-    # st.header("Database Settings")
-    # existing_databases = get_existing_databases(config_path)  # This function needs to be implemented.
-    # List components
-    # StreamSim, METs calculator
-
+def results_page():
     # Get the session state
     session = st.session_state
     if session is None:
@@ -677,9 +671,9 @@ def settings_page():
     )
     
     # Add a button to go back to the input page
-    if st.button("Back to Analyze Dataset"):
+    if st.button("Back to Inputs"):
         # Go back to the input page
-        session["page"] = "analyze"
+        session["page"] = "input"
         st.rerun()()
         
     # creating a single-element container
@@ -1097,6 +1091,36 @@ def settings_page():
         time.sleep(session.get("timeout", TIMEOUT))
 
 
+
+# Define the settings page
+def settings_page():
+        # Get the session state
+    session = st.session_state
+    if session is None:
+        st.error("Please run the app first.")
+        return
+
+    st.title("Settings")
+    st.subheader("Running Components")
+    st.markdown("""
+        1. Data analyser  
+        2. Real-time data stream simulator  
+        3. METS calculator
+        """)
+    st.subheader("Database Status")
+
+    with st.spinner("Checking database connection..."):
+        databases = get_existing_databases()
+
+    if databases:
+        st.success("Connected to database successfully!")
+        st.subheader("Available Databases")
+
+        st.dataframe(databases)
+    else:
+        st.error("Database connection failed or no databases found.")
+    
+
 def login_page():
     st.title("Sign In")
     username = st.text_input("Username")
@@ -1193,6 +1217,8 @@ def main():
             input_page(garmin_df)
     elif session.get("page") == "import":
         import_page()
+    elif session.get("page") == "results":
+        results_page()
     elif session.get("page") == "settings":
         settings_page()
 
