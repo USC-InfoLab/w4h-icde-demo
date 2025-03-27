@@ -23,9 +23,10 @@ You will need the following to run the demo:
 - [pgAdmin](https://www.pgadmin.org/)
 - [Postgres.app](https://postgresapp.com/downloads.html)
 
-After you install Docker, pgAdmin and Postgres.app, start `Postgres.app` server and verify the installation:accessible:
-    - Verify the installation running `pg_config --version`
-    - Verify the connection with `pgAdmin`
+After you install Docker, pgAdmin, and Postgres.app, start `Postgres.app` server and verify the installation:
+
+- Verify the installation running `pg_config --version`
+- Verify the connection with `pgAdmin`
 
 ```plaintext
             host: localhost
