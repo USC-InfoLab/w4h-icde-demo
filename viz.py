@@ -1101,21 +1101,21 @@ def settings_page():
         return
 
     st.title("Settings")
-    st.subheader("Running Components")
+    st.subheader("Components")
     st.markdown("""
         1. Data analyser  
         2. Real-time data stream simulator  
         3. METS calculator
         """)
-    st.subheader("Database Status")
+    st.subheader("Database")
 
     with st.spinner("Checking database connection..."):
         databases = get_existing_databases()
 
     if databases:
-        st.success("Connected to database successfully!")
-        st.subheader("Available Databases")
+        st.success("Connected")
 
+        databases = pd.DataFrame(databases, columns=["Database Name"])
         st.dataframe(databases)
     else:
         st.error("Database connection failed or no databases found.")
@@ -1160,7 +1160,7 @@ def documentation_page():
     page = st.selectbox("Documentation pages", ["Demo Instructions"])
 
     if page == "Demo Instructions":
-        with open('markdown/demo_instructions.md', 'r', encoding='utf-8') as markdown_file:
+        with open('markdown/DEMO_SCENARIO.md', 'r', encoding='utf-8') as markdown_file:
             markdown_text = markdown_file.read()
             #update path to static folder from ../static to ../app/static
             markdown_text = markdown_text.replace("../static", "../app/static")
