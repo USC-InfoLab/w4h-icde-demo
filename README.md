@@ -38,11 +38,11 @@ After you install Docker, pgAdmin, and Postgres.app, start `Postgres.app` server
 
 You can then run the demo in 3 different ways:
 
-1. DockerHub image (easiest)
-2. Building a Docker image
-3. From code base
+1. [DockerHub image](#1-dockerhub-image) (easiest)
+2. [Building a Docker image](#2-building-a-docker-image)
+3. [From code base](#3-from-code-base)
 
-See below for instructions on how to proceeds. Once the W4H toolkit container is running, open the dashboard at http://localhost:8501/ and follow [DEMO_SCENARIO.md](DEMO_SCENARIO.md).
+Once the W4H Toolkit container is running, open the dashboard at http://localhost:8501/ and follow [DEMO_SCENARIO.md](markdown/DEMO_SCENARIO.md).
 
 ### 1. DockerHub image
 
