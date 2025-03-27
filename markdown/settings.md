@@ -1,10 +1,12 @@
-# Welcome to w4h setting up toturial!
+## Platform Settings
 
-## Prerequisites
+### Prerequisites
+
 Ensure you have your database service in somewhere, and you know the 
 db's host,username,password,database name, and the port it is listening to.
 
-## Setup
+### Components
+
 1. create your config.yaml to setup your db, according to the example file:
 [config.yaml.example](../app/static/config.yaml.example)
 3. create a file named config.yaml, then copy code in the file you downloaded(config.yaml.example), replace these fields:  

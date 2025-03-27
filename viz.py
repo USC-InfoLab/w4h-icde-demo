@@ -54,7 +54,7 @@ def get_garmin_user_id(db_conn, pattern=None):
     query = f"SELECT user_id FROM {DB_USER_TABLE}"
     params = []
     if pattern:
-        query += f" WHERE subj_id LIKE %s"
+        query += f" WHERE subject_id LIKE %s"
         pattern = f'%{pattern}%'
         params = [pattern]
     # execute the query
@@ -66,7 +66,7 @@ def get_garmin_df(db_conn, pattern=None):
     query = f"SELECT * FROM {DB_USER_TABLE}"
     params = []
     if pattern:
-        query += f" WHERE subj_id LIKE %s"
+        query += f" WHERE subject_id LIKE %s"
         pattern = f'%{pattern}%'
         params = [pattern]
     # execute the query
@@ -74,6 +74,7 @@ def get_garmin_df(db_conn, pattern=None):
 
 
 def calculate_mets(cal_df, user_weights=None):
+
     if not user_weights:
         print('no user weights provided, using default')
         user_weights = dict(zip(cal_df.user_id.unique(), np.ones(cal_df.user_id.nunique()) * 70))
@@ -83,16 +84,12 @@ def calculate_mets(cal_df, user_weights=None):
     return mets_df
     # return pd.DataFrame(columns=['user_id', 'timestamp', 'value'])
 
-
-
 # dashboard setup
 st.set_page_config(
-    page_title="Real-Time Apple-Watch Heart-Rate Monitoring Dashboard",
+    page_title="W4H Dashboard",
     page_icon="🏥",
     layout="wide",
 )
-
-
 
 # Flask server API endpoint
 SERVER_URL = f"http://{HOST}:{PORT}"
@@ -315,10 +312,10 @@ def input_page(garmin_df):
         return
 
     # preparing data
-    user_ids = garmin_df.subj_id.tolist()
-    rank_options = garmin_df['rank'].unique().tolist()
+    user_ids = garmin_df.subject_id.tolist()
+    # rank_options = garmin_df['rank'].unique().tolist()
     state_of_residence_options = garmin_df['state'].unique().tolist() 
-    drop_type_options = garmin_df['drop_type'].unique().tolist()
+    # drop_type_options = garmin_df['drop_type'].unique().tolist()
     weight_min, weight_max = int(garmin_df.weight.min()), int(garmin_df.weight.max())
     height_min, height_max = int(garmin_df.height.min()), int(garmin_df.height.max())
     age_min, age_max = int(garmin_df.age.min()), int(garmin_df.age.max())
@@ -338,8 +335,8 @@ def input_page(garmin_df):
             options=user_ids,
             default=session.get('selected_users', []))
         
-    selected_rank = []
-    selected_drop_type = []
+    # selected_rank = []
+    # selected_drop_type = []
     selected_state_of_residence = []
     selected_state_of_residence_control = []
     selected_weight_range = []
@@ -419,9 +416,9 @@ def input_page(garmin_df):
             default=session.get('selected_users_control', [])
         )
         
-    selected_rank_control = []
+    # selected_rank_control = []
     selected_state_of_residence_control = []
-    selected_drop_type_control = []
+    # selected_drop_type_control = []
     selected_weight_range_control = []
     selected_height_range_control = []
     selected_age_range_control = []
@@ -583,7 +580,7 @@ def input_page(garmin_df):
         
         # Filter the dataframe based on the selected criteria for subjects
         if subject_selection_type == 'id':
-            subjects_df = garmin_df.query('subj_id in @selected_users')
+            subjects_df = garmin_df.query('subject_id in @selected_users')
         else:
             # subjects_df = garmin_df.query('rank == @selected_rank and drop_type == @selected_drop_type and weight >= @selected_weight_range[0] and weight <= @selected_weight_range[1] and height >= @selected_height_range[0] and height <= @selected_height_range[1] and age >= @selected_age_range[0] and age <= @selected_age_range[1]')
             subjects_df = garmin_df.query('state in @selected_state_of_residence and weight >= @selected_weight_range[0] and weight <= @selected_weight_range[1] and height >= @selected_height_range[0] and height <= @selected_height_range[1] and age >= @selected_age_range[0] and age <= @selected_age_range[1]')
@@ -603,7 +600,7 @@ def input_page(garmin_df):
         
         # Go to the results page
         session['page'] = "results"
-        st.rerun()()
+        st.rerun()
 
 
 # Define the results page
@@ -616,9 +613,9 @@ def results_page():
     
    
     subjects_df = session.get('subjects_df')
-    subject_ids = subjects_df.subj_id.tolist()
+    subject_ids = subjects_df.subject_id.tolist()
     control_df = session.get('control_df')
-    control_ids = control_df.subj_id.tolist()
+    control_ids = control_df.subject_id.tolist()
     
     window_size = session['window_size']
     real_time_update = session['real_time_update']
@@ -1094,22 +1091,52 @@ def results_page():
         time.sleep(session.get("timeout", TIMEOUT))
 
 
+
+# Define the settings page
+def settings_page():
+        # Get the session state
+    session = st.session_state
+    if session is None:
+        st.error("Please run the app first.")
+        return
+
+    st.title("Settings")
+    st.subheader("Running Components")
+    st.markdown("""
+        1. Data analyser  
+        2. Real-time data stream simulator  
+        3. METS calculator
+        """)
+    st.subheader("Database Status")
+
+    with st.spinner("Checking database connection..."):
+        databases = get_existing_databases()
+
+    if databases:
+        st.success("Connected to database successfully!")
+        st.subheader("Available Databases")
+
+        st.dataframe(databases)
+    else:
+        st.error("Database connection failed or no databases found.")
+    
+
 def login_page():
-    st.title("User login")
-    username = st.text_input("username")
-    password = st.text_input("password", type="password", autocomplete="off")
+    st.title("Sign In")
+    username = st.text_input("Username")
+    password = st.text_input("Password", type="password", autocomplete="off")
 
     if 'login-state' in st.session_state.keys():
         del st.session_state['login-state']
 
-    if st.button("login"):
+    if st.button("Login"):
         conn = sqlite3.connect('user.db')
         cursor = conn.cursor()
         try:
             cursor.execute('''select password,salt from users where username = ?''',(username,))
             row = cursor.fetchone()
             if row is None:
-                st.error("user not exist!")
+                st.error("username or password is wrong")
                 conn.close()
                 return
             hasher = hashlib.sha256()
@@ -1118,7 +1145,7 @@ def login_page():
             if (row[0] == encodePwd):
                 st.session_state["login-state"] = True
                 st.session_state["login-username"] = username
-                st.session_state["page"] = "input"
+                st.session_state["page"] = "documentation"
                 st.rerun()()
             else:
                 st.error("username or password is wrong")
@@ -1127,14 +1154,13 @@ def login_page():
             st.error("something wrong in the server")
         conn.close()
 
-def tutorial_page():
-    page = st.selectbox("Select a tutorial", ["Setting up", "How to start"])
+def documentation_page():
+    st.title("Documentation")
 
-    if page == "Setting up":
-        with open('markdown/setting_up.md', 'r', encoding='utf-8') as markdown_file:
-            markdown_text = markdown_file.read()
-    elif page == "How to start":
-        with open('markdown/how_to_start.md', 'r', encoding='utf-8') as markdown_file:
+    page = st.selectbox("Documentation pages", ["Demo Instructions"])
+
+    if page == "Demo Instructions":
+        with open('markdown/demo_instructions.md', 'r', encoding='utf-8') as markdown_file:
             markdown_text = markdown_file.read()
             #update path to static folder from ../static to ../app/static
             markdown_text = markdown_text.replace("../static", "../app/static")
@@ -1155,7 +1181,6 @@ def tutorial_page():
 
 def main():
     # dashboard title
-    st.title("W4H Integrated Toolkit")
     session = st.session_state
     createNav()
     
@@ -1163,11 +1188,11 @@ def main():
     if session is None:
         st.error("Please run the app first.")
         return
-    if session.get("page") == "tutorial":
-        tutorial_page()
+    if session.get("page") == "documentation":
+        documentation_page()
     elif session.get("login-state",False) == False or session.get("page","login") == "login":
         login_page()
-    elif session.get("page") == "input":
+    elif session.get("page") == "analyze":
         # if session doesn't contain key "current_db"
         if not session.get("current_db"):
             session["current_db"] = getCurrentDbByUsername(session.get("login-username"))
@@ -1194,6 +1219,8 @@ def main():
         import_page()
     elif session.get("page") == "results":
         results_page()
+    elif session.get("page") == "settings":
+        settings_page()
 
 if __name__ == '__main__':
     if not st.session_state.get("page"):
