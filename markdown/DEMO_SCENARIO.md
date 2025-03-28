@@ -36,8 +36,8 @@ Follow these steps:
 
     Download sample data:
 
-    [synthetic_subject_data.csv](https://drive.google.com/file/d/1yAx63xeIwhI_8_1pUqGX2JWbkuFb8e3l/view?usp=sharing)  
-    [synthetic_timeseries_data_reduced.csv](https://drive.google.com/file/d/1EvpYG1KKm51YlDUQ_ezDCNaVCLiS8tF4/view?usp=sharing)  
+    [synthetic_subject_data.csv](https://github.com/USC-InfoLab/w4h-datasets/blob/main/synthetic_subject_data.csv)  
+    [synthetic_timeseries_data.csv](https://github.com/USC-InfoLab/w4h-datasets/blob/main/synthetic_timeseries_data.csv)  
 
     Check "Populate subject table" and upload `synthetic_subject_data.csv`:
 
