@@ -1,5 +1,6 @@
 database:
   dbms: postgresql
+  # Set to host: localhost for running from code base
   host: host.docker.internal
   port: 5432
   user: postgres

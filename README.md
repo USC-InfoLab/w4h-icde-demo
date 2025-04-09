@@ -77,7 +77,8 @@ If you wish to start the container in interactive mode:
 
 ### 3. From code base
 
-Edit `config.yaml` and replace database host with `localhost`.
+Edit `config.yaml` and replace under `database` `host: host.docker.internal` with `host: localhost`.
+
 From within this repository start the dashboard:
 
 ```bash
